@@ -5,11 +5,11 @@ services:
     build:
       context: .
     ports:
-      - "8000:8000"
+      - "8002:8002"
     volumes:
       - ./mediators:/mediators
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"                                               
+      sh -c "python manage.py runserver 0.0.0.0:8002"                                               
 
 
 

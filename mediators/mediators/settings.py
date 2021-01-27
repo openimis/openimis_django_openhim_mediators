@@ -25,7 +25,7 @@ SECRET_KEY = 'b=+169oujb4hcmh$ar!#vz+0%+cl@#)vf4xtxb34$fuls1=+)8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -37,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
+    'claim_mediator',
+    'organisation_mediator',
+    'coverage_mediator',
+    'group_mediator',
+    'patient_mediator',
+    'contract_mediator',
+    'overview',
 ]
 
 MIDDLEWARE = [
