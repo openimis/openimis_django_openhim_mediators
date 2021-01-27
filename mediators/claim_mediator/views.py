@@ -30,13 +30,18 @@ from time import sleep
 
 from overview.models import configs
 from overview.views import configview
+import http.client
+import base64
 
 
 @api_view(['GET', 'POST'])
 def getClaims(request):
+	result = configview()
+	configurations = result.__dict__
 	# Query the upstream server via openHIM mediator port 8000
 	# Caution: To secure the endpoint with SSL certificate,FQDN is required 
 	if request.method == 'GET':
+		authvars = "health1:health@123"#username:password
 		url = "http://104.248.143.105:8000/api/api_fhir_r4/Claim"
 		querystring = {"":""}
 		payload = ""
@@ -59,12 +64,12 @@ def getClaims(request):
 
 
 def registerClaimsMediator():
-	API_URL = 'https://104.236.37.64:8080'
-	USERNAME = 'root@openhim.org'
-	PASSWORD = 'healthcloud7'
-
 	result = configview()
 	configurations = result.__dict__
+
+	API_URL = 'https://'+configurations["data"]["openhim_url"]+':8080'
+	USERNAME = configurations["data"]["openhim_user"]
+	PASSWORD = configurations["data"]["openhim_passkey"]
 
 
 	options = {
