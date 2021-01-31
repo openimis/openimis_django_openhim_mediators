@@ -25,7 +25,7 @@ SECRET_KEY = 'b=+169oujb4hcmh$ar!#vz+0%+cl@#)vf4xtxb34$fuls1=+)8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+
 
     'claim_mediator',
     'organisation_mediator',
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'patient_mediator',
     'contract_mediator',
     'overview',
+    'claimresponse_mediator',
 ]
 
 MIDDLEWARE = [
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'mediators.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +78,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'mediators.wsgi.application'
 
