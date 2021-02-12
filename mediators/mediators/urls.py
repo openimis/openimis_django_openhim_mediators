@@ -24,6 +24,7 @@ from group_mediator.views import getGroup
 from patient_mediator.views import getPatient
 from contract_mediator.views import getContract
 from claimresponse_mediator.views import getClaimResponse
+from coverageeligibilityrequest_mediator.views import getCoverageEligibilityRequest
 
 from coverage_mediator.views import registerCoverageMediator
 from claim_mediator.views import registerClaimsMediator
@@ -32,6 +33,7 @@ from group_mediator.views import registerGroupMediator
 from patient_mediator.views import registerPatientMediator
 from contract_mediator.views import registerContractMediator
 from claimresponse_mediator.views import registerClaimResponseMediator
+from coverageeligibilityrequest_mediator.views import registerCoverageEligibilityRequestMediator
 
 
 urlpatterns = [
@@ -43,6 +45,8 @@ urlpatterns = [
     path('api/api_fhir_r4/Group', getGroup),
     path('api/api_fhir_r4/Contract', getContract),
     path('api/api_fhir_r4/ClaimResponse', getClaimResponse),
+    path('api/api_fhir_r4/CoverageEligibilityRequest', getCoverageEligibilityRequest),
+
 ]
 
 #register Mediators - once -- uncomment after setting up variables
@@ -55,3 +59,4 @@ urlpatterns = [
 # registerPatientMediator()
 # registerContractMediator()
 # registerClaimResponseMediator()
+# registerCoverageEligibilityRequestMediator()
