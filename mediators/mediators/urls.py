@@ -45,11 +45,13 @@ urlpatterns = [
     path('api/api_fhir_r4/ClaimResponse', getClaimResponse),
 ]
 
-#register Mediators - once
-registerClaimsMediator()
-registerCoverageMediator()
-registerOrganisationMediator()
-registerGroupMediator()
-registerPatientMediator()
-registerContractMediator()
-registerClaimResponseMediator()
+#register Mediators - once -- uncomment after setting up variables
+
+
+# registerClaimsMediator()
+# registerCoverageMediator()
+# registerOrganisationMediator()
+# registerGroupMediator()
+# registerPatientMediator()
+# registerContractMediator()
+# registerClaimResponseMediator()
