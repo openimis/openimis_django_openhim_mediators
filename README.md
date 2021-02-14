@@ -13,6 +13,6 @@ To run the mediator:
 
 1. `Git clone` this repo - https://github.com/ahoazure/openhim_mediators_docker.git
 
-`git clone https://github.com/ahoazure/openhim_mediators_docker.git`
+    `git clone https://github.com/ahoazure/openhim_mediators_docker.git`
 
 2. Cd into the repo - cd openhim_mediators_docker
