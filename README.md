@@ -12,7 +12,9 @@ This guide assumes successful installation of OpenIMIS (http://openimis.org/), O
 To run the mediator:
 
 1. `Git clone` this repo - https://github.com/ahoazure/openhim_mediators_docker.git
-
     `git clone https://github.com/ahoazure/openhim_mediators_docker.git`
-
-2. Cd into the repo - cd openhim_mediators_docker
+2. Cd into the repo openhim_mediators_docker
+    `cd cd openhim_mediators_docker`
+3. Run `docker-compose build`
+4. Make migrations
+    `docker-compose run mediators python manage.py  makemigrations`
