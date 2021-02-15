@@ -1,13 +1,4 @@
-"""
-Settings for openhim CoverageEligibilityRequest mediator developed in Django.
 
-The python-based CoverageEligibilityRequest mediator implements python-utils 
-from https://github.com/de-laz/openhim-mediator-utils-py.git.
-
-For more information on this file, contact the Python developers
-Stephen Mburu:ahoazure@gmail.com & Peter Kaniu:peterkaniu254@gmail.com
-
-"""
 
 from django.shortcuts import render
 
