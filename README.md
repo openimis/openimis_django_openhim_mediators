@@ -9,15 +9,7 @@ The code contains Python-based OpenHIM mediators created for Healthix by **Dr. S
 
 This guide assumes successful installation of OpenIMIS (http://openimis.org/), OpenHIM (https://openhim.org), docker and docker-compose.
 
-To run the mediator:
-
-1. Git clone this repo - https://github.com/ahoazure/openhim_mediators_docker.git
-
-    `git clone https://github.com/ahoazure/openhim_mediators_docker.git`
-    
-2. Cd into the repo openhim_mediators_docker
-
-    `cd cd openhim_mediators_docker`
+To run the mediator project:
     
 3. Run `docker-compose build`
 4. Make migrations

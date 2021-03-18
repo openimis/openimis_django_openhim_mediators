@@ -1,16 +1,48 @@
 version: "3"
 
 services:
+  mongo:
+    container_name: openhim-mongo
+    ports:
+      - "27017:27017"
+    image: mongo:3.4
+    
+  core:
+    container_name: openhim-core
+    image: jembi/openhim-core
+    environment:
+      - mongo_url=mongodb://mongo/openhim
+      - mongo_atnaUrl=mongodb://mongo/openhim
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "5001:5001"
+      - "5050:5050"
+      - "5051:5051"
+      - "5052:5052"
+      - "7788:7788"
+    depends_on:
+      - mongo
+  
+  openhim-console:
+    container_name: openhim-console
+    image: jembi/openhim-console:latest
+    restart: unless-stopped
+    ports:
+      - "9000:80"
+    healthcheck:
+     test: "curl -sS http://openhim-console || exit 1"
+     interval: 30s
+     timeout: 30s
+     retries: 3
   mediators:
     build:
-      context: .
+      context: https://github.com/openimis/openimis_django_openhim_mediators.git#develop
     ports:
-      - "8002:8002"
+      - "8000:8000"
     volumes:
       - ./mediators:/mediators
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8002"                                               
-
-
+      sh -c "python manage.py runserver 0.0.0.0:8000"                                              
 
 
