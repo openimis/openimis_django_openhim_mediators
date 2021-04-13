@@ -19,7 +19,7 @@ def getClaims(request):
 	if data.status_code == 200:
 		res=data.json()
 		resp = requests.post(configurations["data"]["sosys_url"]+'/claims/openimis_claims/',json=res['entry'])
-		return Response(res)
+	return Response(res)
 	# 	if resp.status_code == 200:
 	# 		return Response(resp.json())
 	# 	else:
