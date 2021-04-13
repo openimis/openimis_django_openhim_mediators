@@ -20,7 +20,7 @@ def getClaimResponse(request):
 	data = requests.get(configurations["data"]["openimis_url"]+'ClaimResponse/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
 	if data.status_code == 200:
 		res=data.json()
-		resp=requests.post(configurations["data"]["sosys_url"]+'/claims/valuated/',json=res['entry'])
+		resp=requests.post(configurations["data"]["sosys_url"]+'/claims/valuated/',json=res['entry'],timeout=1000)
 		return Response(res)
 	else:
 		return Response({"Error":"Failed to connect to openimis server with error code {}".format(data.status_code)})
