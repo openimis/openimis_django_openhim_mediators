@@ -113,8 +113,5 @@ def registerOrganisationMediator():
 	openhim_mediator_utils.register_mediator()
 	checkHeartbeat(openhim_mediator_utils)
 
-
-
-# Morning the health status of the client on the console
 def checkHeartbeat(openhim_mediator_utils):
 	openhim_mediator_utils.activate_heartbeat()

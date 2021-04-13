@@ -82,7 +82,6 @@ def registerClaimResponseMediator():
 		options=options,
 		conf=conf
 		)
-
 	openhim_mediator_utils.register_mediator()
 	checkHeartbeat(openhim_mediator_utils)
 def checkHeartbeat(openhim_mediator_utils):
