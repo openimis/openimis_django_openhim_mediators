@@ -19,7 +19,7 @@ def getClaimResponse(request):
 	configurations = result.__dict__
 	data = requests.get(configurations["data"]["openimis_url"]+'ClaimResponse/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
 	res=data.json()
-	resp=requests.post(configurations["data"]["sosys_url"]+'/claims/valuated/',json=res['entry'])
+	requests.post(configurations["data"]["sosys_url"]+'/claims/valuated/',json=res['entry'])
 	return Response(res)
 	# if data.status_code == 200:
 	# 	res=data.json()
