@@ -19,12 +19,13 @@ def getClaims(request):
 	if data.status_code == 200:
 		res=data.json()
 		resp = requests.post(configurations["data"]["sosys_url"]+'/claims/openimis_claims/',json=res['entry'])
-		if resp.status_code == 200:
-			return Response(resp.json())
-		else:
-			return Response({"Success":"Successfully sent claims"})
-	else:
-		return Response({"Error":"Failed to connect to openimis server with error code {}".format(data.status_code)})
+		return Response(res)
+	# 	if resp.status_code == 200:
+	# 		return Response(resp.json())
+	# 	else:
+	# 		return Response({"Success":"Successfully sent claims"})
+	# else:
+	# 	return Response({"Error":"Failed to connect to openimis server with error code {}".format(data.status_code)})
 
 def registerClaimsMediator():
 	result = configview()

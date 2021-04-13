@@ -21,7 +21,7 @@ def getClaimResponse(request):
 	if data.status_code == 200:
 		res=data.json()
 		resp=requests.post(configurations["data"]["sosys_url"]+'/claims/valuated/',json=res['entry'])
-		return Response({"Success":"Successfully sent claimResponse"})
+		return Response(res)
 	else:
 		return Response({"Error":"Failed to connect to openimis server with error code {}".format(data.status_code)})
 	

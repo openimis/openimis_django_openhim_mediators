@@ -26,26 +26,29 @@ def getOrganisation(request):
 		if res.json()['total'] == 0:
 			requests.post(configurations["data"]["openimis_url"]+'Organisation/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]), json=item)
 		else:
-			obj = res.json()['entry'][0]['resource']
-			if obj['email'] != item['email'] or obj['address'] != item['address'] or obj['phone'] != item['phone'] or  obj['fax'] != item['fax'] or obj['name'] != item['name'] or  obj['accountancy_account'] != item['accountancy_account']:
-				requests.put(configurations["data"]["openimis_url"]+'Organisation/'+obj['id']+'/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]),json=item)
-						
+			if res.json()['entry']:
+				obj = res.json()['entry'][0]['resource']
+				if obj['email'] != item['email'] or obj['address'] != item['address'] or obj['phone'] != item['phone'] or  obj['fax'] != item['fax'] or obj['name'] != item['name'] or  obj['accountancy_account'] != item['accountancy_account']:
+					requests.put(configurations["data"]["openimis_url"]+'Organisation/'+obj['id']+'/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]),json=item)
+							
 	return Response("Successfully finished")
 
 def deactactivateCompany():
 	result = configview()
 	configurations = result.__dict__
 	count = requests.get(configurations["data"]["openimis_url"]+'Organisation/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
+	print(count)
 	page_size = math.ceil(count.json()['total']/10)
 	page_count = range(1,page_size+1)
 	for page in page_count:
 		res = requests.get(configurations["data"]["openimis_url"]+'Organisation/?page-offset='+str(page),auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
-		for company in res.json()['entry']:
-			resp = requests.get(configurations["data"]["sosys_url"]+'/covers/Organisation/',params={'code':company['resource']['code']})
-			if len(resp.json()['results'])==0:
-				print(company['resource']['id'])
-				data = requests.delete(configurations["data"]["openimis_url"]+'Organisation/'+company['resource']['id']+'/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
-				print(data.json())
+		if 'entry' in res.json():
+			for company in res.json()['entry']:
+				resp = requests.get(configurations["data"]["sosys_url"]+'/covers/Organisation/',params={'code':company['resource']['code']})
+				if len(resp.json()['results'])==0:
+					print(company['resource']['id'])
+					data = requests.delete(configurations["data"]["openimis_url"]+'Organisation/'+company['resource']['id']+'/',auth=HTTPBasicAuth(configurations["data"]["openimis_user"],configurations["data"]["openimis_passkey"]))
+					print(data.json())
 			
 def registerOrganisationMediator():
 	result = configview()
