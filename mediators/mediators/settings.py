@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'overview',
     'coverageeligibilityrequest_mediator',
     'claimresponse_mediator',
+    'contract_mediator'
 ]
 
 MIDDLEWARE = [

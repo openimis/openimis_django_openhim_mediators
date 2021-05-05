@@ -4,6 +4,7 @@ from claim_mediator.views import getClaims
 from coverage_mediator.views import getCoverage
 from organisation_mediator.views import getOrganisation
 from patient_mediator.views import getPatient
+from contract_mediator.views import getContract
 from claimresponse_mediator.views import getClaimResponse
 from coverageeligibilityrequest_mediator.views import getCoverageEligibilityRequest
 from coverage_mediator.views import registerCoverageMediator
@@ -12,10 +13,12 @@ from organisation_mediator.views import registerOrganisationMediator
 from patient_mediator.views import registerPatientMediator
 from claimresponse_mediator.views import registerClaimResponseMediator
 from coverageeligibilityrequest_mediator.views import registerCoverageEligibilityRequestMediator
+from contract_mediator.views import registerContractMediator
 from overview.views import congifgurations
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('Claim', getClaims),
+    path('Contract', getContract),
     path('Coverage', getCoverage),
     path('Organisation', getOrganisation),
     path('Patient', getPatient),
@@ -29,4 +32,5 @@ registerCoverageMediator()
 registerOrganisationMediator()
 registerPatientMediator()
 registerClaimResponseMediator()
+registerContractMediator()
 registerCoverageEligibilityRequestMediator()
