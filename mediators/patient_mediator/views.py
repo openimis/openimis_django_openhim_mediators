@@ -46,6 +46,13 @@ def savePrefs(request):
 	}
 	# getPatient(requestt)
 
+	org_id = request.data.get("id")
+	# host = request.data.get("id")
+	# username = request.data.get("id")
+	# password = request.data.get("id")
+
+	# return Response({"org_id":org_id})
+
 	result = configview()
 	configurations = result.__dict__
 	
@@ -85,12 +92,20 @@ def savePrefs(request):
 		}
 	}
 
-	
+	org = {
+		"managingOrganization": {
+			"reference": "Organization/"+str(org_id)
+		}
+	}
+
+
 
 	for i in range(len(datac["entry"])):
 		datac["entry"][i].update(request_dict)
+		datac["entry"][i]["resource"].update(org)
 
 	data = json.dumps(datac)
+	print(data)
 	payload = data
 	headers = {
 		'Content-Type': "application/json",
