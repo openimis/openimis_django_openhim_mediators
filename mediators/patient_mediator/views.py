@@ -82,6 +82,39 @@ def savePrefs(request):
 	print(response.status_code)
 	datac = json.loads(response.text)
 
+	
+    # x_sample = {"resourceType": "Bundle",
+    # "type": "transaction",
+    # "total": 61,
+    # "link": [
+    #     {
+    #         "relation": "self",
+    #         "url": "https%3A%2F%2Fdemo.openimis.org%2Fapi%2Fapi_fhir_r4%2FPatient%2F%3F%3D"
+    #     },
+    #     {
+    #         "relation": "next",
+    #         "url": "https%3A%2F%2Fdemo.openimis.org%2Fapi%2Fapi_fhir_r4%2FPatient%2F%3F%3D%26page-offset%3D2"
+    #     }
+    # ],
+    # "entry": []
+	# }
+	# entries = datac["entry"]
+	# total = datac['total']
+	# if total>10:
+	# 	while 'next' in datac['link'][0]:
+	# 		decoded_url = urllib3.parse.unquote(datac['link'][1]['url'])
+	# 		part_after_patient = decoded_url.split("/Patient", 1)[1]
+	# 		next_url = url_him_get + part_after_patient
+
+	# 		# Make the next request
+	# 		response = requests.request("GET", next_url, data=payload, headers=headers, params=querystring)
+	# 		datac2 = json.loads(response.text)
+
+	# 		entries.extend(datac2['entry'])
+		
+	# print("entries total" + str(len(entries)))
+
+	# datac["entry"] = entries
 	print("Step 3")
 
 	datac["type"] = "transaction"
@@ -105,7 +138,6 @@ def savePrefs(request):
 		datac["entry"][i]["resource"].update(org)
 
 	data = json.dumps(datac)
-	print(data)
 	payload = data
 	headers = {
 		'Content-Type': "application/json",
