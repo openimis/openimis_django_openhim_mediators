@@ -50,7 +50,7 @@ jobs:
       run: docker push ${{ secrets.REGISTRY_NAME }}/openimis-mediator:$(echo $GITHUB_SHA | head -c7)
 
     - name: Update deployment file
-      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.REGISTRY_NAME }}/openimis-mediator:'${TAG}'|' $GITHUB_WORKSPACE/deployment.yaml
+      run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|${{ secrets.REGISTRY_NAME }}/openimis-mediator:'${TAG}'|' $GITHUB_WORKSPACE/kubernetes/deployment.yaml
 
     - name: Install doctl
       uses: digitalocean/action-doctl@v2
