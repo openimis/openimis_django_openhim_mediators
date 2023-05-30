@@ -29,8 +29,11 @@ spec:
           #       name: suresalama-configmap
           resources:
             limits:
-              # memory: "512Mi"
-              cpu: 200m
+              memory: "512Mi"
+              cpu: 500m
+            requests:
+              memory: "312Mi"
+              cpu: 250m
           livenessProbe:
             failureThreshold: 3
             initialDelaySeconds: 120
