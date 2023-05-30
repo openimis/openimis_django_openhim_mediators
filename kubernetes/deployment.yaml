@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: staging
+  name: openimis-mediator
+spec:
+  selector:
+    matchLabels:
+      app: openimis-mediator
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: openimis-mediator
+    spec:
+      containers:
+        - name: openimis-mediator
+          image: <IMAGE>
+          ports:
+            - containerPort: 8000
+          # envFrom:
+          #   - secretRef:
+          #       name: suresalama-secret
+          #   - configMapRef:
+          #       name: suresalama-configmap
+          resources:
+            limits:
+              # memory: "512Mi"
+              cpu: 200m
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            successThreshold: 1
+            tcpSocket:
+              port: 8000
+            timeoutSeconds: 30
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            successThreshold: 1
+            tcpSocket:
+              port: 8000
+            timeoutSeconds: 30
+          imagePullPolicy: Always
+          # restartPullPolicy: Never
+
+      #   volumeMounts:
+      #   - name: config-volume
+      #     mountPath: /secrets/config
+      #     readOnly: true
+      # volumes:
+      # - name: config-volume
+      #   configMap:
+      #     name: openimis-mediator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: staging
+  name: openimis-mediator
+  labels:
+    app: openimis-mediator
+spec:
+  ports:
+    - name: openimis-mediator-http
+      port: 80
+      targetPort: 8000
+  selector:
+    app: openimis-mediator
