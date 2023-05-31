@@ -57,7 +57,7 @@ urlpatterns = [
 # registerCoverageMediator()
 # registerOrganisationMediator()
 # registerGroupMediator()
-registerPatientMediator()
+# registerPatientMediator()
 # registerContractMediator()
 # registerClaimResponseMediator()
 # registerCoverageEligibilityRequestMediator()

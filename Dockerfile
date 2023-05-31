@@ -12,3 +12,5 @@ RUN pip install -r /requirements.txt
 RUN mkdir /mediators
 WORKDIR /mediators
 COPY ./mediators /mediators
+
+RUN ["python3", "manage.py", "runserver"]
