@@ -22,7 +22,7 @@ import http.client
 import json
 
 
-import urllib3
+from urllib.parse import unquote
 import requests
 from datetime import datetime
 from openhim_mediator_utils.main import Main
@@ -65,9 +65,9 @@ def savePrefs(request):
 	encodedStr_him = str(encodedBytes_home, "utf-8")
 	auth_openhim = "Basic " + encodedStr_him
 	# /api/api_fhir_r4/Patient
-
-	url_him_get = configurations["data"]["openhim_url"]+":"+str(5001)+"/api/api_fhir_r4/Patient"
-	url_him = configurations["data"]["openhim_url"]+":"+str(5001)+"/api/lafia/PatientResource"
+	base_him = 'http://'+configurations["data"]["openhim_url"]+":"+str(5001)
+	url_him_get = base_him+"/api/api_fhir_r4/Patient"
+	url_him = base_him+"/api/lafia/PatientResource"
 
 
 	print("Step 2")
@@ -98,23 +98,58 @@ def savePrefs(request):
     # ],
     # "entry": []
 	# }
-	# entries = datac["entry"]
-	# total = datac['total']
-	# if total>10:
-	# 	while 'next' in datac['link'][0]:
-	# 		decoded_url = urllib3.parse.unquote(datac['link'][1]['url'])
-	# 		part_after_patient = decoded_url.split("/Patient", 1)[1]
-	# 		next_url = url_him_get + part_after_patient
+	entries = datac["entry"]
+	total = datac['total']
+	print(total)
+	have_now = len(datac['entry'])
+	if total>10:
+		print('pagintion 1')
+		print(datac['link'][1])
+		i = 2
+		while have_now<total:
+			print('havenow '+ str(have_now))
+			print('total '+ str(total))
 
-	# 		# Make the next request
-	# 		response = requests.request("GET", next_url, data=payload, headers=headers, params=querystring)
-	# 		datac2 = json.loads(response.text)
+			print('pagintion 1.2')
+			print(datac['link'][1]['url'])
+			decoded_url = unquote(datac['link'][1]['url'])
+			part_after_patient = decoded_url.split("/Patient", 1)[1]
+			print("after part")
+			# replace =& with ''
+			part_after_patient = part_after_patient.replace("=&", "")
+			part_after_patient = part_after_patient.replace("/", "")
+			part_after_patient = '?page-offset='+str(i)
+			i = i+1
+			next_url = url_him_get + part_after_patient
 
-	# 		entries.extend(datac2['entry'])
+
+			# replace part before /api/ with url_him
+			# next_url = base_him + "/api/" + next_url.split("/api/", 1)[1]
+			print(next_url)
+
+			# Make the next request
+			sleep(1)
+			response = requests.request("GET", next_url, data=payload, headers=headers, params=querystring)
+			print("pre erro")
+			print(response.status_code)
+			datac2 = json.loads(response.text)
+
+			print("got new data")
+			print(str(len(datac2['entry'])))
+
+			entries.extend(datac2['entry'])
+
+			have_now = len(entries)
+
+
+			
+
+
+			
 		
-	# print("entries total" + str(len(entries)))
+	print("entries total" + str(len(entries)))
 
-	# datac["entry"] = entries
+	datac["entry"] = entries
 	print("Step 3")
 
 	datac["type"] = "transaction"
@@ -143,6 +178,8 @@ def savePrefs(request):
 		'Content-Type': "application/json",
 		# 'Authorization': auth_openhim
 		}
+	print(url_him)
+	print("Step 3.01")
 	responsee = requests.request("POST", url_him, data=payload, headers=headers, params=querystring)
 	print("Step 3.1")
 	print(url_him)
@@ -162,6 +199,12 @@ def savePrefs(request):
 @api_view(['GET', 'POST'])
 def getPatient(request):
 	print(" yes I was here 3")
+
+	# get url params
+	page_offset = request.GET.get("page-offset", "")
+
+	print("page_offset")
+	print(page_offset)
 	
 	result = configview()
 	configurations = result.__dict__
@@ -175,6 +218,8 @@ def getPatient(request):
 
 	# Standard Base64 Encoding
 	url = configurations["data"]["openimis_url"]+getPortPart(configurations["data"]["openimis_port"])+"/api/api_fhir_r4/Patient"
+	if page_offset!="":
+		url = url+"?page-offset="+page_offset
 	# Query the upstream server via openHIM mediator port 8000
 	# Caution: To secure the endpoint with SSL certificate,FQDN is required 
 	if request.method == 'GET':
@@ -185,6 +230,9 @@ def getPatient(request):
 		print(url)
 		print(headers)
 		response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
+		print("lol error")
+		print(response.status_code)
+		
 		datac = json.loads(response.text)
 
 
