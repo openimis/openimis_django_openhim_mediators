@@ -13,6 +13,7 @@ COPY ./mediators /code/mediators
 
 WORKDIR /code/mediators
 
+RUN sed -i 's/from collections import Mapping/from collections.abc import Mapping/g' manage.py
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 
