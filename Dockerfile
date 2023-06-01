@@ -13,9 +13,11 @@ RUN mkdir /mediators
 WORKDIR /mediators
 COPY ./mediators /mediators
 
+
 COPY . /code
 
 RUN python manage.py makemigrations
 RUN python manage.py migrate
 
-CMD python manage.py runserver
+RUN ["python3", "manage.py", "runserver"]
+
