@@ -9,7 +9,18 @@ services:
     volumes:
       - ./mediators:/mediators
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8002"                                               
+      sh -c "python manage.py runserver 0.0.0.0:8002"
+    networks:
+      mediator-net:
+         ipv4_address: 172.20.20.10
+    container_name: mediators-test
+networks:
+  mediator-net:
+    name: mediator-net
+    ipam:
+      config:
+        - subnet: 172.20.20.0/24
+          ip_range: 172.20.20.0/24                                        
 
 
 
